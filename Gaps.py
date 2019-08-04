@@ -192,7 +192,17 @@ print("Probability of NOT observing craters in the gap (%f - %f km) is: %f" % (D
 ##-------------------- OUTPUT INTERPRETATION TO THE USER ---------------------##
 
 print("\n\n               ~~~~~ INTERPRETATION ~~~~~\n")
-print(" Based on the truncated Pareto fit, and comparison to that, we estimate the\n probability that the hypothesis that the gap between the two largest craters\n is NOT meaningful can be rejected.")
+print("Based on the truncated Pareto fit, and comparison to that, we estimate the\nprobability that the hypothesis that the gap between the two largest craters\nis NOT meaningful can be rejected.")
+if (percentile_Mimas_D[len(percentile_Mimas_D)-1] > 0.99) or (percentile_Mimas_D[len(percentile_Mimas_D)-2] > 0.99):
+    print("  - From the Monte Carlo test on crater diameter range in a CSFD, the null hypothesis CAN be rejected.")
+else:
+    print("  - From the Monte Carlo test on crater diameter range in a CSFD, the null hypothesis canNOT be rejected.")
+print("    The largest crater was a %g percentile event, and the second-largest crater was a %g percentile event (median = 0th percentile)." % (round(percentile_Mimas_D[len(percentile_Mimas_D)-1]*100,3), round(percentile_Mimas_D[len(percentile_Mimas_D)-2]*100,3)))
+if probability < 0.01:
+    print("  - From a basic CDF test with Poisson statistics for x=0, the null hypothesis CAN be rejected.")
+else:
+    print("  - From a basic CDF test with Poisson statistics for x=0, the null hypothesis canNOT be rejected.")
+print("\nA separate (but related) question is whether the sample craters were drawn\nfrom the same population as the power-law.  We can test whether that hypothesis\ncan be rejected.")
 if ADmean/i_MonteCarlo_conf_interval < 0.01:
     print("  - From the K-Sample Anderson-Darling test, the null hypothesis CAN be rejected.")
 else:
@@ -201,14 +211,6 @@ if KSmean/i_MonteCarlo_conf_interval < 0.01:
     print("  - From the 2-Sample Kolmogorov-Smirnov test, the null hypothesis CAN be rejected.")
 else:
     print("  - From the 2-Sample Kolmogorov-Smirnov test, the null hypothesis canNOT be rejected.")
-if (percentile_Mimas_D[len(percentile_Mimas_D)-1] > 0.99) or (percentile_Mimas_D[len(percentile_Mimas_D)-2] > 0.99):
-    print("  - From the Monte Carlo test on crater diameter range in a CSFD, the null hypothesis CAN be rejected.")
-else:
-    print("  - From the Monte Carlo test on crater diameter range in a CSFD, the null hypothesis canNOT be rejected.")
-if probability < 0.01:
-    print("  - From a basic CDF test with Poisson statistics for x=0, the null hypothesis CAN be rejected.")
-else:
-    print("  - From a basic CDF test with Poisson statistics for x=0, the null hypothesis canNOT be rejected.")
 
 
 
